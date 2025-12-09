@@ -1,0 +1,310 @@
+/* Variables para modo claro/oscuro (NUEVOS COLORES ) */
+:root {
+    /* Fondo Azul Muy Pálido */
+    --bg-color: #ebf5ff; 
+    --text-color: #212529;
+    --nav-bg: #4f0088; 
+    --nav-text: white;
+    --primary-color: #832CBE; 
+    --secondary-bg: #ffffff;
+}
+
+body.dark-mode {
+    --bg-color: #1a1a2e; 
+    --text-color: #f8f9fa; 
+    --nav-bg: #0f0f1d;
+    --primary-color: #ffb703; 
+    --secondary-bg: #141423; 
+}
+
+/* --- ESTILO BASE DEL CUERPO (Fondo Color Sólido) --- */
+
+body {
+    /* Usamos background-color para máxima especificidad en modo claro. */
+    background-color: var(--bg-color) !important; 
+    
+    background-image: none !important; 
+    background-attachment: fixed; 
+    color: var(--text-color) !important;
+    
+    /* La transición ahora es background-color para el modo claro. */
+    transition: background-color 0.5s ease, color 0.3s; 
+}
+
+body.dark-mode {
+    /* Mantenemos el degradado, que anula el background-color. */
+    background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1d 100%) !important;
+    background-attachment: fixed;
+    color: var(--text-color) !important;
+    /* Añadimos la transición aquí para una doble seguridad en el modo oscuro. */
+    transition: background 0.5s ease, color 0.3s;
+}
+
+/* Aplicar color principal a elementos de Bootstrap */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.btn-dark {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* --- ESTILOS DE TARJETA Y ANIMACIONES --- */
+
+.card {
+    background-color: var(--secondary-bg) !important;
+    color: var(--text-color) !important;
+    border-radius: 10px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+    cursor: pointer;
+    overflow: hidden; 
+}
+
+/* Animación al pasar el ratón (Hover) */
+.card:hover {
+    transform: translateY(-8px) scale(1.02); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); 
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* --- SKELETON LOADER (Animación de carga) --- */
+
+@keyframes pulse-bg {
+    0% { background-color: rgba(165, 165, 165, 0.1); }
+    50% { background-color: rgba(165, 165, 165, 0.3); }
+    100% { background-color: rgba(165, 165, 165, 0.1); }
+}
+
+.skeleton {
+    background-color: #e0e0e0;
+    height: 100%;
+    animation: pulse-bg 1.5s infinite;
+    border-radius: 5px;
+}
+body.dark-mode .skeleton {
+    background-color: #444; 
+}
+
+/* --- HEADER & NAV --- */
+.header-custom {
+    background-color: var(--nav-bg);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.container-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo para el contenedor del logo (imagen + texto) */
+.logo-img {
+    display: flex; /* Permite alinear la imagen y el texto horizontalmente */
+    align-items: center; /* Centra verticalmente la imagen y el texto */
+    text-decoration: none; 
+    gap: 10px; 
+    color: var(--nav-text) !important; 
+}
+
+/* Estilo para la imagen del logo */
+.logo-img img {
+    height: 40px; 
+    width: auto;
+    transition: filter 0.3s ease; 
+}
+
+/* Estilo para el texto del logo (NUEVO) */
+.logo-text {
+    color: var(--nav-text); 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+/* Asegura la visibilidad de la imagen y el texto en dark mode */
+body.dark-mode .logo-img img {
+    /* Atenúa el brillo al 80% en modo oscuro */
+    filter: brightness(0.8) !important; 
+}
+body.dark-mode .logo-text {
+    color: var(--nav-text) !important; 
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.nav-menu a, .btn-theme {
+    color: var(--nav-text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Botón Hamburguesa (oculto en escritorio) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: none;
+    border: none;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--nav-text);
+    transition: all 0.3s ease;
+}
+
+/* MEDIA QUERIES PARA MÓVIL/TABLET */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex; 
+    }
+
+    /* Menú oculto por defecto en móvil */
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--nav-bg);
+        transform: translateY(-200%); 
+        transition: transform 0.4s ease-in-out; 
+        text-align: center;
+        padding-bottom: 1rem;
+    }
+
+    .nav-menu.active {
+        transform: translateY(0); 
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    /* Animación del icono hamburguesa a X */
+    .hamburger.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .hamburger.open span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+}
+/* --- ESTILOS PARA EL FILTRO ALFABÉTICO --- */
+.letter-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px; 
+    height: 35px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-color); 
+    background-color: var(--secondary-bg); 
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.letter-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1); 
+}
+
+/* Estilo para la letra activa/seleccionada */
+.letter-btn.active {
+    background-color: var(--nav-bg);
+    color: white;
+    border-color: var(--nav-bg);
+    transform: scale(1.05);
+}
+
+/* Ajuste en modo oscuro */
+body.dark-mode .letter-btn {
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--secondary-bg);
+}
+body.dark-mode .letter-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color); 
+}
+/* --- ESTILOS ESPECÍFICOS PARA EL MODAL DE DETALLES --- */
+
+/* Estilo base del contenido del modal (Modo Claro) */
+.modal-content {
+    background-color: var(--secondary-bg) !important;
+    color: var(--text-color) !important;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Encabezado y Pie de Modal */
+.modal-header, 
+.modal-footer {
+    background-color: var(--secondary-bg) !important;
+    border-color: rgba(0, 0, 0, 0.1); /* Líneas divisorias claras */
+    color: var(--text-color) !important;
+}
+
+/* Botón de cierre (X) en Modo Claro */
+.btn-close {
+    filter: invert(0); /* Normal (Negro) */
+}
+
+/* --- ESTILOS DEL MODAL EN MODO OSCURO --- */
+
+body.dark-mode .modal-content {
+    /* Usamos el color de fondo secundario oscuro para las tarjetas/modales */
+    background-color: var(--secondary-bg) !important; 
+    color: var(--text-color) !important;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    background-color: var(--secondary-bg) !important;
+    /* Líneas divisorias oscuras */
+    border-color: rgba(255, 255, 255, 0.1); 
+    color: var(--text-color) !important;
+}
+
+/* Botón de cierre (X) en Modo Oscuro (se vuelve blanco) */
+body.dark-mode .btn-close {
+    filter: invert(1); /* Invierte el color del SVG del botón a blanco */
+}
+
+/* Listas (Ingredientes) en Modo Oscuro */
+body.dark-mode .list-group-flush {
+    border-color: rgba(255, 255, 255, 0.1) !important; 
+}
+body.dark-mode .list-group-item {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
